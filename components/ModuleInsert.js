@@ -1,12 +1,14 @@
 // components/TodoInsert.js
 import React from 'react';
 import {TouchableOpacity, StyleSheet, Text, Alert } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const TodoInsert = () => {
+const ModuleInsert = ({ navigation }) => {
   return (
      <TouchableOpacity
          style={[styles.plusButton]}
-         onPress={() => Alert.alert('Cannot press this one')}
+         onPress={() => navigation.navigate('Details')}
      >
      <Text
          style={[
@@ -21,7 +23,7 @@ const TodoInsert = () => {
 
 const styles = StyleSheet.create({
     plusButton: {
-        backgroundColor: "aliceblue",
+        backgroundColor: "skyblue",
         paddingHorizontal: 8,
         paddingVertical: 6,
         borderRadius: 4,
@@ -29,11 +31,14 @@ const styles = StyleSheet.create({
         marginHorizontal: "1%",
         marginBottom: 6,
         minWidth: "48%",
+        minHeight: "20%",
         textAlign: "center",
     },
     plusLabel : {
+        fontSize: 20,
+        fontWeight: "500",
         color : "white",
     },
 });
 
-export default TodoInsert;
+export default ModuleInsert;

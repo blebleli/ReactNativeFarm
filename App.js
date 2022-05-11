@@ -1,107 +1,76 @@
-import React, { useState } from "react";
-import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
-import ModuleInsert from './components/ModuleInsert';
 
-const JustifyContentBasics = () => {
-  const [justifyContent, setJustifyContent] = useState("flex-start");
+import React from 'react';
+import { TouchableOpacity,View, Image,Text, StyleSheet,Dimensions } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-  return (
-    <PreviewLayout
-      label="justifyContent"
-      selectedValue={justifyContent}
-      values={[
-        "flex-start",
-        "flex-end",
-        "center",
-        "space-between",
-        "space-around",
-        "fff",
-        "ddd",
-      ]}
-      setSelectedValue={setJustifyContent}
-    >
-
-    {/*<View
-        style={[styles.box, { backgroundColor: "powderblue" }]}
-      />*/}
-    </PreviewLayout>
-  );
-};
-
-const PreviewLayout = ({
-  label,
-  children,
-  values,
-  selectedValue,
-  setSelectedValue,
-}) => (
-  <View style={{ padding: 10, flex: 1 }}>
-    <Text style={styles.label}>{label}</Text>
-    <View style={styles.row}>
-      {values.map((value) => (
-        <TouchableOpacity
-          key={value}
-          onPress={() => setSelectedValue(value)}
-          style={[styles.button, selectedValue === value && styles.selected]}
-        >
-          <Text
-            style={[
-              styles.buttonLabel,
-              selectedValue === value && styles.selectedLabel,
-            ]}
-          >
-            {value}
-          </Text>
-        </TouchableOpacity>
-
-      ))}
-      <ModuleInsert/>
-    </View>
-  </View>
-);
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginTop: 8,
-    backgroundColor: "aliceblue",
+     width: windowWidth,
+     height: windowHeight,
   },
-  box: {
-    width: 50,
-    height: 50,
-  },
-  row: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-  },
-  button: {
-    paddingHorizontal: 8,
-    paddingVertical: 6,
-    borderRadius: 4,
-    backgroundColor: "oldlace",
-    alignSelf: "flex-start",
-    marginHorizontal: "1%",
-    marginBottom: 6,
-    minWidth: "48%",
-    textAlign: "center",
-  },
-  selected: {
-    backgroundColor: "coral",
-    borderWidth: 0,
-  },
-  buttonLabel: {
-    fontSize: 12,
-    fontWeight: "500",
-    color: "coral",
-  },
-  selectedLabel: {
-    color: "white",
-  },
-  label: {
-    textAlign: "center",
-    marginBottom: 10,
-    fontSize: 24,
+  logo: {
+    width: windowWidth,
+    height: windowHeight,
   },
 });
 
-export default JustifyContentBasics;
+
+function HomeScreen({ navigation }) {
+  return (
+         <TouchableOpacity
+               style={[styles.container]}
+               onPress={() => navigation.navigate('Details')}
+         >
+          <Image
+            style={styles.logo}
+            source={ require('./image/login_image.png')
+              }
+          />
+
+       </TouchableOpacity>
+  );
+}
+
+function DetailsScreen() {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Details Screen</Text>
+    </View>
+  );
+}
+
+const Stack = createNativeStackNavigator();
+
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Details" component={DetailsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+
+//const App = () => {
+//  return (
+//     <TouchableOpacity
+//           style={[styles.container]}
+//           onPress={() => navigation.navigate('Details')}
+//     >
+//      <Image
+//        style={styles.logo}
+//        source={ require('./image/login_image.png')
+//          }
+//      />
+//
+//   </TouchableOpacity>
+//  );
+//}
+
+export default App;
